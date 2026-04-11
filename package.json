@@ -24,7 +24,7 @@
   },
   "name": "xget",
   "license": "AGPL-3.0-or-later",
-  "private": false,
+  "private": true,
   "scripts": {
     "commitlint": "commitlint --last --verbose",
     "commitmsg": "commitlint --edit",
