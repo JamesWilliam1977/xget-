@@ -20,6 +20,90 @@ describe('Utility Functions', () => {
     ])('should parse CACHE_DURATION=%s as %i', (value, expected) => {
       expect(createConfig({ CACHE_DURATION: value }).CACHE_DURATION).toBe(expected);
     });
+
+    it('should reject invalid numeric runtime overrides', () => {
+      const config = createConfig({
+        MAX_PATH_LENGTH: '-1',
+        MAX_RETRIES: '-2',
+        RETRY_DELAY_MS: '-10',
+        TIMEOUT_SECONDS: '0'
+      });
+
+      expect(config.MAX_RETRIES).toBe(3);
+      expect(config.RETRY_DELAY_MS).toBe(1000);
+      expect(config.TIMEOUT_SECONDS).toBe(30);
+      expect(config.SECURITY.MAX_PATH_LENGTH).toBe(2048);
+    });
+
+    it('should allow zero retry delay for tests and low-latency deployments', () => {
+      expect(createConfig({ RETRY_DELAY_MS: '0' }).RETRY_DELAY_MS).toBe(0);
+      expect(createConfig({ RETRY_DELAY_MS: 0 }).RETRY_DELAY_MS).toBe(0);
+    });
+
+    it.each([
+      { label: 'empty string', value: '' },
+      { label: 'blank string', value: ' ' },
+      { label: 'tab string', value: '\t' },
+      { label: 'null', value: null },
+      { label: 'false', value: false },
+      { label: 'empty array', value: [] }
+    ])('should reject zero-coercible RETRY_DELAY_MS from $label', ({ value }) => {
+      expect(createConfig({ RETRY_DELAY_MS: value }).RETRY_DELAY_MS).toBe(1000);
+    });
+
+    it.each([
+      { label: 'empty string', value: '' },
+      { label: 'blank string', value: ' ' },
+      { label: 'tab string', value: '\t' },
+      { label: 'null', value: null },
+      { label: 'false', value: false },
+      { label: 'empty array', value: [] }
+    ])('should reject zero-coercible positive integer overrides from $label', ({ value }) => {
+      const config = createConfig({
+        CACHE_DURATION: value,
+        MAX_PATH_LENGTH: value,
+        MAX_RETRIES: value,
+        TIMEOUT_SECONDS: value
+      });
+
+      expect(config.CACHE_DURATION).toBe(300);
+      expect(config.MAX_RETRIES).toBe(3);
+      expect(config.SECURITY.MAX_PATH_LENGTH).toBe(2048);
+      expect(config.TIMEOUT_SECONDS).toBe(30);
+    });
+
+    it.each([
+      { label: 'true', value: true },
+      { label: 'date object', value: new Date(0) }
+    ])('should reject non-string non-number runtime overrides from $label', ({ value }) => {
+      const config = createConfig({
+        CACHE_DURATION: value,
+        MAX_RETRIES: value,
+        RETRY_DELAY_MS: value,
+        TIMEOUT_SECONDS: value
+      });
+
+      expect(config.CACHE_DURATION).toBe(300);
+      expect(config.MAX_RETRIES).toBe(3);
+      expect(config.RETRY_DELAY_MS).toBe(1000);
+      expect(config.TIMEOUT_SECONDS).toBe(30);
+    });
+
+    it('should still accept numeric and trimmed numeric runtime overrides', () => {
+      const config = createConfig({
+        CACHE_DURATION: ' 60 ',
+        MAX_PATH_LENGTH: 4096,
+        MAX_RETRIES: '2',
+        RETRY_DELAY_MS: ' 0 ',
+        TIMEOUT_SECONDS: 45
+      });
+
+      expect(config.CACHE_DURATION).toBe(60);
+      expect(config.MAX_RETRIES).toBe(2);
+      expect(config.RETRY_DELAY_MS).toBe(0);
+      expect(config.SECURITY.MAX_PATH_LENGTH).toBe(4096);
+      expect(config.TIMEOUT_SECONDS).toBe(45);
+    });
   });
 
   describe('isGitRequest', () => {

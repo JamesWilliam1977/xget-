@@ -19,14 +19,29 @@
 import { PLATFORMS } from './platform-catalog.js';
 
 /**
+ * Parses an environment value as an integer at or above the configured minimum.
+ * @param {unknown} value Environment value.
+ * @param {number} fallback Fallback used for missing or invalid values.
+ * @param {number} minimum Smallest accepted integer.
+ * @returns {number} Parsed integer or fallback.
+ */
+function parseIntegerAtLeast(value, fallback, minimum = 1) {
+  if (typeof value !== 'number' && (typeof value !== 'string' || value.trim() === '')) {
+    return fallback;
+  }
+
+  const parsed = Number(value);
+  return Number.isInteger(parsed) && parsed >= minimum ? parsed : fallback;
+}
+
+/**
  * Parses an environment value as a positive integer.
  * @param {unknown} value Environment value.
  * @param {number} fallback Fallback used for missing or invalid values.
  * @returns {number} Parsed positive integer or fallback.
  */
 function parsePositiveInteger(value, fallback) {
-  const parsed = parseInt(String(value), 10);
-  return Number.isInteger(parsed) && parsed > 0 ? parsed : fallback;
+  return parseIntegerAtLeast(value, fallback, 1);
 }
 
 /**
@@ -157,14 +172,14 @@ export function createConfig(env = {}) {
       : ['*'];
 
   return {
-    TIMEOUT_SECONDS: parseInt(String(env.TIMEOUT_SECONDS), 10) || 30,
-    MAX_RETRIES: parseInt(String(env.MAX_RETRIES), 10) || 3,
-    RETRY_DELAY_MS: parseInt(String(env.RETRY_DELAY_MS), 10) || 1000,
+    TIMEOUT_SECONDS: parsePositiveInteger(env.TIMEOUT_SECONDS, 30),
+    MAX_RETRIES: parsePositiveInteger(env.MAX_RETRIES, 3),
+    RETRY_DELAY_MS: parseIntegerAtLeast(env.RETRY_DELAY_MS, 1000, 0),
     CACHE_DURATION: parsePositiveInteger(env.CACHE_DURATION, 300), // 5 minutes
     SECURITY: {
       ALLOWED_METHODS: allowedMethods.length ? allowedMethods : ['GET', 'HEAD'],
       ALLOWED_ORIGINS: allowedOrigins.length ? allowedOrigins : ['*'],
-      MAX_PATH_LENGTH: parseInt(String(env.MAX_PATH_LENGTH), 10) || 2048
+      MAX_PATH_LENGTH: parsePositiveInteger(env.MAX_PATH_LENGTH, 2048)
     },
     PLATFORMS
   };

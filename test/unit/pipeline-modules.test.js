@@ -335,4 +335,46 @@ describe('Pipeline modules', () => {
     expect(plainUnauthorized.status).toBe(401);
     expect(await plainUnauthorized.text()).toContain('Original error: denied');
   });
+
+  it('preserves upstream protocol error responses during finalization', async () => {
+    const request = new Request('https://example.com/ip/openai/v1/chat/completions', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: '{}'
+    });
+    const requestContext = createRequestContext(request, {});
+    const upstreamBody = JSON.stringify({
+      error: {
+        message: 'bad key',
+        type: 'invalid_request_error'
+      }
+    });
+
+    const response = await finalizeResponse({
+      cache: null,
+      cacheTargetUrl: 'https://api.openai.com/v1/chat/completions',
+      canUseCache: false,
+      config: CONFIG,
+      ctx: /** @type {ExecutionContext} */ ({ waitUntil() {}, passThroughOnException() {} }),
+      effectivePath: '/ip/openai/v1/chat/completions',
+      hasSensitiveHeaders: true,
+      monitor: new PerformanceMonitor(),
+      platform: 'ip-openai',
+      request,
+      requestContext,
+      response: new Response(upstreamBody, {
+        status: 401,
+        headers: {
+          'Content-Type': 'application/json',
+          'X-Upstream-Trace': 'trace-123'
+        }
+      }),
+      responseGeneratedLocally: false,
+      url: new URL(request.url)
+    });
+
+    expect(response.status).toBe(401);
+    expect(response.headers.get('X-Upstream-Trace')).toBe('trace-123');
+    expect(await response.text()).toBe(upstreamBody);
+  });
 });

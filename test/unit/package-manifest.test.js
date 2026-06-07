@@ -6,10 +6,10 @@ describe('Package manifest', () => {
   it('does not depend on itself', () => {
     const require = createRequire(import.meta.url);
     const packageJson = require('../../package.json');
-    const { dependencies } = packageJson;
-    const typedDependencies = /** @type {Record<string, string> | undefined} */ (dependencies);
+    const typedPackageJson =
+      /** @type {{ dependencies?: Record<string, string>, name: string }} */ (packageJson);
 
-    expect(packageJson.name).toBe('xget');
-    expect(typedDependencies?.xget).toBeUndefined();
+    expect(typedPackageJson.name).toBe('xget');
+    expect(typedPackageJson.dependencies?.xget).toBeUndefined();
   });
 });

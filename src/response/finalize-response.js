@@ -67,6 +67,15 @@ async function finalizeErrorResponse({ requestContext, response, responseGenerat
     return response;
   }
 
+  if (
+    requestContext.isAI ||
+    requestContext.isHF ||
+    requestContext.isGit ||
+    requestContext.isGitLFS
+  ) {
+    return response;
+  }
+
   const errorText = await response.text().catch(() => 'Unknown error');
   return createErrorResponse(
     `Upstream server error (${response.status}): ${errorText}`,

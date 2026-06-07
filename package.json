@@ -1,7 +1,4 @@
 {
-  "dependencies": {
-    "express": "^5.2.1"
-  },
   "devDependencies": {
     "@cloudflare/vitest-pool-workers": "^0.16.11",
     "@cloudflare/workers-types": "^4.20260329.1",

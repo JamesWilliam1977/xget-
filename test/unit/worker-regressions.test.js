@@ -447,7 +447,7 @@ describe('Worker regression coverage', () => {
     expect(clearTimeoutSpy).toHaveBeenCalledWith(timeoutToken);
   });
 
-  it('returns a generic 500 when retry configuration prevents any upstream attempt', async () => {
+  it('falls back to default retries when retry configuration is invalid', async () => {
     const fetchSpy = vi.spyOn(globalThis, 'fetch').mockResolvedValue(
       new Response('ok', {
         status: 200,
@@ -461,9 +461,9 @@ describe('Worker regression coverage', () => {
       executionContext
     );
 
-    expect(response.status).toBe(500);
-    expect(await response.text()).toBe('No response received after all retry attempts');
-    expect(fetchSpy).not.toHaveBeenCalled();
+    expect(response.status).toBe(200);
+    expect(await response.text()).toBe('ok');
+    expect(fetchSpy).toHaveBeenCalledTimes(1);
   });
 
   it('logs and recovers when request setup throws unexpectedly', async () => {
