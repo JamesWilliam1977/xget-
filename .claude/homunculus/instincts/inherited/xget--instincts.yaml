@@ -1,0 +1,599 @@
+# Instincts generated from https://github.com/JamesWilliam1977/xget-
+# Generated: 2026-08-03T09:10:54.903Z
+# Version: 2.0
+# NOTE: This file supplements (does not replace) any existing curated instincts.
+# High-confidence manually curated instincts should be preserved alongside these.
+
+---
+id: xget--commit-length
+trigger: "when writing a commit message"
+confidence: 0.6
+domain: git
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Commit Length
+
+## Action
+
+Write moderate-length commit messages (~64 characters)
+
+## Evidence
+
+- Average commit message length: 64 chars
+- Based on 100 commits
+
+---
+id: xget--naming-files
+trigger: "when creating a new file"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Naming Files
+
+## Action
+
+Use kebab-case naming convention
+
+## Evidence
+
+- Analyzed file naming patterns in repository
+- Dominant pattern: kebab-case
+
+---
+id: xget--import-relative
+trigger: "when importing modules"
+confidence: 0.75
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Import Relative
+
+## Action
+
+Use relative imports for project files
+
+## Evidence
+
+- Import analysis shows relative import pattern
+- Example: import { x } from '../lib/x'
+
+---
+id: xget--export-style
+trigger: "when exporting from a module"
+confidence: 0.7
+domain: code-style
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Export Style
+
+## Action
+
+Prefer named exports
+
+## Evidence
+
+- Export pattern analysis
+- Dominant style: named
+
+---
+id: xget--test-separate
+trigger: "when writing tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Test Separate
+
+## Action
+
+Place tests in the tests/ or __tests__/ directory, mirroring src structure
+
+## Evidence
+
+- Separate test directory pattern detected
+- Tests live in dedicated test folders
+
+---
+id: xget--test-framework
+trigger: "when writing tests"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Test Framework
+
+## Action
+
+Use vitest as the test framework
+
+## Evidence
+
+- Test framework detected: vitest
+- File pattern: *.test.js
+
+---
+id: xget--test-naming
+trigger: "when creating a test file"
+confidence: 0.85
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Test Naming
+
+## Action
+
+Name test files using the pattern: *.test.js
+
+## Evidence
+
+- File pattern: *.test.js
+- Consistent across test files
+
+---
+id: xget--test-types
+trigger: "when planning tests for a feature"
+confidence: 0.7
+domain: testing
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Test Types
+
+## Action
+
+Write unit, integration tests to match project standards
+
+## Evidence
+
+- Test types detected: unit, integration
+- Coverage config: yes
+
+---
+id: xget--workflow-dependency-update-via-dependabot
+trigger: "when doing dependency update via dependabot"
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Dependency Update Via Dependabot
+
+## Action
+
+Follow the dependency-update-via-dependabot workflow:
+1. Dependabot creates a commit updating package.json and/or package-lock.json with new dependency versions.
+2. A pull request is opened for the update.
+3. The pull request is merged, resulting in a merge commit.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~6x per month
+- Files: package.json, package-lock.json
+
+---
+id: xget--workflow-readme-multilingual-update
+trigger: "when doing readme multilingual update"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Readme Multilingual Update
+
+## Action
+
+Follow the readme-multilingual-update workflow:
+1. Edit README.md, README.zh-Hans.md, and README.zh-Hant.md with the desired changes.
+2. Commit the changes with a docs-related message.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: README.md, README.zh-Hans.md, README.zh-Hant.md
+
+---
+id: xget--workflow-ci-workflow-update
+trigger: "when doing ci workflow update"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Ci Workflow Update
+
+## Action
+
+Follow the ci-workflow-update workflow:
+1. Edit .github/workflows/dependabot-auto-merge.yml or similar workflow files.
+2. Commit the changes with a ci-related message.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: .github/workflows/dependabot-auto-merge.yml
+
+---
+id: xget--workflow-feature-or-bugfix-with-tests-and-docs
+trigger: "when doing feature or bugfix with tests and docs"
+confidence: 0.55
+domain: workflow
+source: repo-analysis
+source_repo: https://github.com/JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Feature Or Bugfix With Tests And Docs
+
+## Action
+
+Follow the feature-or-bugfix-with-tests-and-docs workflow:
+1. Edit or add source code files in src/.
+2. Edit or add test files in test/.
+3. Edit README files if documentation is needed.
+4. Commit all related changes together.
+
+## Evidence
+
+- Workflow detected from commit patterns
+- Frequency: ~1x per month
+- Files: src/**/*.js, test/**/*.js, README.md
+
+---
+id: xget--naming-files-kebab-case
+trigger: "When creating or renaming a file"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Naming Files Kebab Case
+
+## Action
+
+Name the file using kebab-case (e.g., my-file.js)
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.files
+- All files in src/ and test/ use kebab-case
+
+---
+id: xget--naming-functions-camelCase
+trigger: "When defining a function"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Naming Functions CamelCase
+
+## Action
+
+Name the function using camelCase
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.functions
+- Functions in src/ use camelCase
+
+---
+id: xget--naming-classes-pascal-case
+trigger: "When defining a class"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Naming Classes Pascal Case
+
+## Action
+
+Name the class using PascalCase
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.classes
+
+---
+id: xget--naming-constants-screaming-snake-case
+trigger: "When defining a constant"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Naming Constants Screaming Snake Case
+
+## Action
+
+Name the constant using SCREAMING_SNAKE_CASE
+
+## Evidence
+
+- Pattern in codeStyle.namingConventions.constants
+
+---
+id: xget--import-style-relative
+trigger: "When importing a module"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Import Style Relative
+
+## Action
+
+Use relative import paths
+
+## Evidence
+
+- Pattern in codeStyle.importStyle
+- Imports in src/ use relative paths
+
+---
+id: xget--export-style-named
+trigger: "When exporting functions or variables"
+confidence: 0.9
+domain: code-style
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Export Style Named
+
+## Action
+
+Use named exports
+
+## Evidence
+
+- Pattern in codeStyle.exportStyle
+- Exports in src/ use named exports
+
+---
+id: xget--testing-vitest-framework
+trigger: "When writing tests"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Testing Vitest Framework
+
+## Action
+
+Use the Vitest framework
+
+## Evidence
+
+- Pattern in testing.framework
+- Presence of vitest config and usage in test files
+
+---
+id: xget--testing-file-pattern
+trigger: "When creating a test file"
+confidence: 0.9
+domain: testing
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Testing File Pattern
+
+## Action
+
+Name the test file with the pattern *.test.js
+
+## Evidence
+
+- Pattern in testing.filePattern
+- Test files in test/ follow *.test.js
+
+---
+id: xget--testing-unit-integration
+trigger: "When writing tests for new or changed code"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Testing Unit Integration
+
+## Action
+
+Write both unit and integration tests as appropriate
+
+## Evidence
+
+- Pattern in testing.testTypes
+- Test files in test/ include both unit and integration tests
+
+---
+id: xget--testing-coverage-config
+trigger: "When running tests"
+confidence: 0.8
+domain: testing
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Testing Coverage Config
+
+## Action
+
+Ensure test coverage is measured and reported
+
+## Evidence
+
+- Pattern in testing.coverageConfig
+- Presence of coverage configuration in vitest config
+
+---
+id: xget--git-commit-prefix
+trigger: "When writing a commit message"
+confidence: 0.9
+domain: git
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Git Commit Prefix
+
+## Action
+
+Prefix the commit message with a type (e.g., chore, fix, docs, ci, deps)
+
+## Evidence
+
+- Pattern in commits.prefixes
+- Examples: 'chore: ...', 'docs: ...', 'ci: ...'
+
+---
+id: xget--git-commit-length
+trigger: "When writing a commit message"
+confidence: 0.7
+domain: git
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Git Commit Length
+
+## Action
+
+Keep the commit message concise, around 64 characters on average
+
+## Evidence
+
+- Pattern in commits.averageLength
+- Commit messages average 64 characters
+
+---
+id: xget--workflow-dependency-update-via-dependabot
+trigger: "When a new version of a dependency is released and Dependabot detects it"
+confidence: 0.99
+domain: workflow
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Dependency Update Via Dependabot
+
+## Action
+
+Update package.json and/or package-lock.json, open a pull request, and merge after checks pass
+
+## Evidence
+
+- Workflow: dependency-update-via-dependabot
+- Commits with 'deps' prefix and package.json/package-lock.json changes
+
+---
+id: xget--workflow-readme-multilingual-update
+trigger: "When documentation needs to be updated or improved across all supported languages"
+confidence: 0.9
+domain: workflow
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Readme Multilingual Update
+
+## Action
+
+Edit README.md, README.zh-Hans.md, and README.zh-Hant.md together and commit with a docs-related message
+
+## Evidence
+
+- Workflow: readme-multilingual-update
+- Commits with 'docs' prefix and changes to all README files
+
+---
+id: xget--workflow-ci-workflow-update
+trigger: "When CI/CD automation needs to be changed (e.g., auto-merge, action version updates)"
+confidence: 0.85
+domain: workflow
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Ci Workflow Update
+
+## Action
+
+Edit relevant .github/workflows/*.yml files and commit with a ci-related message
+
+## Evidence
+
+- Workflow: ci-workflow-update
+- Commits with 'ci' prefix and changes to workflow files
+
+---
+id: xget--workflow-feature-or-bugfix-with-tests-and-docs
+trigger: "When developing a new feature or fixing a bug that requires code, test, and documentation changes"
+confidence: 0.8
+domain: workflow
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Workflow Feature Or Bugfix With Tests And Docs
+
+## Action
+
+Edit/add files in src/, test/, and README files as needed, then commit all related changes together
+
+## Evidence
+
+- Workflow: feature-or-bugfix-with-tests-and-docs
+- Commits touching src/, test/, and README files together
+
+---
+id: xget--error-handling-try-catch
+trigger: "When handling errors in code"
+confidence: 0.8
+domain: code-style
+source: repo-analysis
+source_repo: JamesWilliam1977/xget-
+---
+
+# Xget  Error Handling Try Catch
+
+## Action
+
+Use try-catch blocks for error handling
+
+## Evidence
+
+- Pattern in errorHandling.style
+- No custom error classes or global handlers present
+
